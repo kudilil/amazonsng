@@ -1,0 +1,38 @@
+
+
+{% extends 'MerchantPage.html' %}
+{% block body %}
+
+
+        <form method="POST">
+    {% csrf_token %} 
+<table class="catogory">
+    <tr>
+        <td>
+            Catogory Name
+        </td>
+        <td><input type="text" class="textbox" placeholder="Enter category" name="ctname"></td>
+    </tr>
+    <tr>
+        <td>
+            Specification
+        </td>
+        <td><input type="text" class="textbox" placeholder="Specification" name="specification"></td>
+    </tr>
+    <tr>
+            <td>
+                    <input type="submit" class="but" value="Add Now">
+            </td>
+        </tr>
+        
+</table>
+</form>
+
+{% endblock %}
+
+
+
+
+
+
+

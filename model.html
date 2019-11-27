@@ -1,0 +1,127 @@
+{% extends 'MerchantPage.html' %}
+{% block body %}
+
+
+
+
+
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <table class="model">
+            <tr>
+                <td>
+                    Catogory Name
+                </td>
+                <td><select name="catname" class="textbox" style="color: deeppink;" id="catname"><option>--Select--</option>
+                  {%for c in cat %}
+                <option value="{{c.0}}">{{c.1}}</option>
+                {% endfor %}
+                
+                </select></td>
+            </tr>
+            <tr>
+                <td>
+                    Subcategory Name
+                </td>
+                <td><select name="scname" style="color: deeppink;" class="textbox" id="scname"><option>--Select--</option>
+				
+                </select></td>
+            </tr>
+            <tr>
+                    <td>
+                        Brand Name
+                    </td>
+                    <td><select name="bname" style="color: deeppink;" class="textbox" id="bname"><option>--Select--</option>
+				
+                    </select></td>
+            </tr>
+            <tr>
+                    <td>
+                        Model Name
+                    </td>
+                    <td><input type="text" class="textbox" placeholder="Enter model name" name="mname"></td>
+            </tr>
+            <tr>
+                <td>
+                    Specification
+                </td>
+                <td><input type="text" class="textbox" placeholder="Enter Specification" name="specification"></td>
+            </tr>
+            <tr>
+                    <td>Price</td>
+                    <td><input type="text" class="textbox" placeholder="Enter Price" name="price"></td>
+                </tr>
+                <tr>
+                  <td>File</td>
+                  <td><input type="file" class="textbox"  name="p1"></td>
+              </tr>
+              <tr>
+                <td>Quantity</td>
+                <td><input type="text" class="textbox"  name="q"></td>
+            </tr>
+                <tr>
+                  <td>
+                          <input type="submit" class="but" value="Add Now">
+                  </td>
+              </tr>
+        </table>
+        </form>
+
+
+
+
+
+        <script src="../static/shopping/js/jquery.min.js"></script>
+        <script>
+            $("#catname").change(function () {
+                var c=0
+                debugger;
+                var entity=new Array();
+                var cid = $("#catname").val();
+                var urls='/subcat/?dataid=' + cid ;
+                $.ajax({
+                    url: urls,
+                    success: function(data){
+                    $('select[name=scname]').empty()
+                    $("#scname").append(new Option("--Select--", ""));   
+                    $.each(data, function(index, text){  
+                                         
+                    $('select[name=scname]').append(
+                    $('<option></option>').val([text[0]]).html(text[2])
+                            );                       
+                           });                        
+                          }                       
+
+                    })
+                   
+                 })
+                 $("#scname").change(function () {
+                var c=0
+                debugger;
+                var entity=new Array();
+                var cid = $("#catname").val();
+                var urls='/brandcat/?dataid=' + cid ;
+
+              $.ajax(
+              {
+                      url: urls,
+                    success: function(data){
+                    $('select[name=bname]').empty()
+                    $("#bname").append(new Option("--Select--", ""));    
+                    $.each(data, function(index, text){  
+                                        
+                    $('select[name=bname]').append(
+                    $('<option></option>').val(text).html(text)
+                            );                       
+                           });                        
+                          }                       
+
+                    })
+                   
+                 })
+
+       </script>
+
+    {% endblock %}
